@@ -1,11 +1,11 @@
 class Wallet {
-  int _balance;
+  double _balance;
 
-  Wallet({int balance = 0}) : _balance = balance;
+  Wallet({double balance = 0}) : _balance = balance;
 
-  int get balance => _balance;
+  double get balance => _balance;
 
-  bool deduct(int amount) {
+  bool deduct(double amount) {
     if (amount > _balance) {
       return false;
     }
