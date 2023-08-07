@@ -13,4 +13,10 @@ void main() {
     expect(ingredient.name, 'Flour');
     expect(ingredient.amount, 1.5);
   });
+
+  test('Add amount to existing StockIngredient', () {
+    var ingredient = StockIngredient('Flour', 1.5);
+    ingredient.add(1.5);
+    expect(ingredient.amount, 3.0);
+  });
 }
