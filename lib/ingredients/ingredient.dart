@@ -13,7 +13,13 @@ class PurchasableIngredient extends Ingredient {
 class StockIngredient extends Ingredient {
   @override
   final String name;
-  final double amount;
+  double _amount;
 
-  StockIngredient(this.name, this.amount);
+  double get amount => _amount;
+
+  StockIngredient(this.name, this._amount);
+
+  void add(double amount) {
+    _amount += amount;
+  }
 }
