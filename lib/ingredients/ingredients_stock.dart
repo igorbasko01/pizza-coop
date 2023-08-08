@@ -15,6 +15,15 @@ class IngredientsStock {
     }
   }
 
+  void use(StockIngredient ingredient) {
+    var existingIngredient = _findFirstIngredient(ingredient.name);
+    if (existingIngredient != null) {
+      existingIngredient.subtract(ingredient.amount);
+    } else {
+      throw IngredientNotFoundException("Ingredient ${ingredient.name} not found");
+    }
+  }
+
   StockIngredient? _findFirstIngredient(String name) {
     try {
       return _ingredients.firstWhere(
