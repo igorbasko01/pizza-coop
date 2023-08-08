@@ -1,4 +1,5 @@
 import 'package:pizza_coop/ingredients/ingredient.dart';
+import 'package:pizza_coop/ingredients/ingredients_catalog.dart';
 import 'package:pizza_coop/ingredients/ingredients_stock.dart';
 import 'package:test/test.dart';
 
@@ -40,5 +41,27 @@ void main() {
     expect(stock.ingredients[1].amount, 0.5);
     expect(stock.ingredients[2].name, 'Cheese');
     expect(stock.ingredients[2].amount, 2.0);
+  });
+
+  test('Stock use removes from existing ingredient', () {
+    var stock = IngredientsStock();
+    stock.add(StockIngredient('Flour', 1.5));
+    stock.use(StockIngredient('Flour', 1.0));
+    expect(stock.ingredients, isNotEmpty);
+    expect(stock.ingredients.length, 1);
+    expect(stock.ingredients[0].name, 'Flour');
+    expect(stock.ingredients[0].amount, 0.5);
+  });
+
+  test('Stock use throws exception if there is insufficient ingredient', () {
+    var stock = IngredientsStock();
+    stock.add(StockIngredient('Flour', 1.5));
+    expect(() => stock.use(StockIngredient('Flour', 2.0)), throwsA(isA<InsufficientIngredientException>()));
+  });
+
+  test('Stock use throws exception if there is no such ingredient', () {
+    var stock = IngredientsStock();
+    stock.add(StockIngredient('Flour', 1.5));
+    expect(() => stock.use(StockIngredient('Tomato Sauce', 1.0)), throwsA(isA<IngredientNotFoundException>()));
   });
 }

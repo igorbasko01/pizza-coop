@@ -19,4 +19,15 @@ void main() {
     ingredient.add(1.5);
     expect(ingredient.amount, 3.0);
   });
+
+  test('Subtract amount to existing StockIngredient', () {
+    var ingredient = StockIngredient('Flour', 1.5);
+    ingredient.subtract(1.0);
+    expect(ingredient.amount, 0.5);
+  });
+
+  test('Subtract throws exception if amount is greater than existing StockIngredient', () {
+    var ingredient = StockIngredient('Flour', 1.5);
+    expect(() => ingredient.subtract(2.0), throwsA(isA<InsufficientIngredientException>()));
+  });
 }
