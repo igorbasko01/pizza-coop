@@ -117,4 +117,20 @@ void main() {
     stock.add(StockIngredient('Flour', 1.5));
     expect(() => stock.useAll([StockIngredient('Tomato Sauce', 1.0)]), throwsA(isA<IngredientNotFoundException>()));
   });
+
+  test('Stock useAll should remove ingredient if reaches zero amount', () {
+    var stock = IngredientsStock();
+    stock.add(StockIngredient('Flour', 1.5));
+    stock.add(StockIngredient('Tomato Sauce', 1.0));
+    stock.add(StockIngredient('Cheese', 2.0));
+    stock.useAll([
+      StockIngredient('Cheese', 1.0),
+      StockIngredient('Flour', 1.5),
+      StockIngredient('Tomato Sauce', 1.0),
+    ]);
+    expect(stock.ingredients, isNotEmpty);
+    expect(stock.ingredients.length, 1);
+    expect(stock.ingredients[0].name, 'Cheese');
+    expect(stock.ingredients[0].amount, 1.0);
+  });
 }
