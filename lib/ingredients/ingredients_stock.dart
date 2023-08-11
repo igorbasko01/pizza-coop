@@ -6,6 +6,12 @@ class IngredientsStock {
 
   List<StockIngredient> get ingredients => _ingredients;
 
+  IngredientsStock({List<StockIngredient>? ingredients}) {
+    if (ingredients != null) {
+      _ingredients.addAll(ingredients);
+    }
+  }
+
   void add(StockIngredient ingredient) {
     try {
       var existingIngredient = _findFirstIngredient(ingredient.name);
