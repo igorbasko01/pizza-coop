@@ -133,4 +133,20 @@ void main() {
     expect(stock.ingredients[0].name, 'Cheese');
     expect(stock.ingredients[0].amount, 1.0);
   });
+
+  test('Stock can be initialized with a list of StockIngredients', () {
+    var stock = IngredientsStock(ingredients: [
+      StockIngredient('Flour', 1.5),
+      StockIngredient('Tomato Sauce', 1.0),
+      StockIngredient('Cheese', 2.0),
+    ]);
+    expect(stock.ingredients, isNotEmpty);
+    expect(stock.ingredients.length, 3);
+    expect(stock.ingredients[0].name, 'Flour');
+    expect(stock.ingredients[0].amount, 1.5);
+    expect(stock.ingredients[1].name, 'Tomato Sauce');
+    expect(stock.ingredients[1].amount, 1.0);
+    expect(stock.ingredients[2].name, 'Cheese');
+    expect(stock.ingredients[2].amount, 2.0);
+  });
 }
