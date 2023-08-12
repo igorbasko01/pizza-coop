@@ -1,3 +1,3 @@
 sealed class IngredientStockEvent {}
 
-class IngredientStockEventLoad extends IngredientStockEvent {}
+class LoadIngredientStockEvent extends IngredientStockEvent {}
