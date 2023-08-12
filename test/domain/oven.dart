@@ -1,9 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:pizza_coop/ingredients/ingredient.dart';
-import 'package:pizza_coop/ingredients/ingredients_catalog.dart';
-import 'package:pizza_coop/ingredients/ingredients_stock.dart';
-import 'package:pizza_coop/oven.dart';
-import 'package:pizza_coop/recipe.dart';
+import 'package:pizza_coop/domain/ingredients/ingredient.dart';
+import 'package:pizza_coop/domain/ingredients/ingredients_catalog.dart';
+import 'package:pizza_coop/domain/ingredients/ingredients_stock.dart';
+import 'package:pizza_coop/domain/oven.dart';
+import 'package:pizza_coop/domain/recipe.dart';
 
 void main() {
   test('Oven receives a recipe and ingredients stock and returns a pizza ingredient', () {

@@ -1,5 +1,5 @@
-import 'package:pizza_coop/ingredients/ingredient.dart';
-import 'package:pizza_coop/wallet.dart';
+import 'package:pizza_coop/domain/ingredients/ingredient.dart';
+import 'package:pizza_coop/domain/wallet.dart';
 
 class IngredientsCatalog {
   List<PurchasableIngredient> _ingredients = [];
