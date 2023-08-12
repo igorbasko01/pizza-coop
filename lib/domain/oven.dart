@@ -1,6 +1,6 @@
-import 'package:pizza_coop/ingredients/ingredient.dart';
-import 'package:pizza_coop/ingredients/ingredients_stock.dart';
-import 'package:pizza_coop/recipe.dart';
+import 'package:pizza_coop/domain/ingredients/ingredient.dart';
+import 'package:pizza_coop/domain/ingredients/ingredients_stock.dart';
+import 'package:pizza_coop/domain/recipe.dart';
 
 class Oven {
   StockIngredient bake(Recipe recipe, IngredientsStock stock) {

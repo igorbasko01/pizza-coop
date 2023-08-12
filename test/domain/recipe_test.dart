@@ -1,5 +1,5 @@
-import 'package:pizza_coop/ingredients/ingredient.dart';
-import 'package:pizza_coop/recipe.dart';
+import 'package:pizza_coop/domain/ingredients/ingredient.dart';
+import 'package:pizza_coop/domain/recipe.dart';
 import 'package:test/test.dart';
 
 void main() {

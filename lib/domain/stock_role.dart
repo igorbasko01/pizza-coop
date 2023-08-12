@@ -1,7 +1,7 @@
-import 'package:pizza_coop/ingredients/ingredient.dart';
-import 'package:pizza_coop/ingredients/ingredients_catalog.dart';
-import 'package:pizza_coop/ingredients/ingredients_stock.dart';
-import 'package:pizza_coop/wallet.dart';
+import 'package:pizza_coop/domain/ingredients/ingredient.dart';
+import 'package:pizza_coop/domain/ingredients/ingredients_catalog.dart';
+import 'package:pizza_coop/domain/ingredients/ingredients_stock.dart';
+import 'package:pizza_coop/domain/wallet.dart';
 
 class StockRole {
   StockRole({required this.catalog, required this.stock, required this.wallet});

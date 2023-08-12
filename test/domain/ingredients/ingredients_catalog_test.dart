@@ -1,6 +1,6 @@
-import 'package:pizza_coop/ingredients/ingredient.dart';
-import 'package:pizza_coop/ingredients/ingredients_catalog.dart';
-import 'package:pizza_coop/wallet.dart';
+import 'package:pizza_coop/domain/ingredients/ingredient.dart';
+import 'package:pizza_coop/domain/ingredients/ingredients_catalog.dart';
+import 'package:pizza_coop/domain/wallet.dart';
 import 'package:test/test.dart';
 
 void main() {

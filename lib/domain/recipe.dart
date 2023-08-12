@@ -1,4 +1,4 @@
-import 'package:pizza_coop/ingredients/ingredient.dart';
+import 'package:pizza_coop/domain/ingredients/ingredient.dart';
 
 class Recipe {
   final String name;
