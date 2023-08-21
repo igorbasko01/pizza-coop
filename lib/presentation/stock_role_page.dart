@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pizza_coop/bloc/stock_role_bloc.dart';
+import 'package:pizza_coop/bloc/stock_role_event.dart';
 import 'package:pizza_coop/bloc/stock_role_state.dart';
 import 'package:pizza_coop/domain/ingredients/ingredient.dart';
 import 'package:pizza_coop/domain/ingredients/ingredients_catalog.dart';
@@ -56,6 +57,7 @@ class _InitialStockRoleView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    BlocProvider.of<StockRoleBloc>(context).add(LoadIngredientsStockRoleEvent());
     return const Center(child: Text('InitialStockRoleView'));
   }
 }
