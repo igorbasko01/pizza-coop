@@ -7,7 +7,7 @@ import 'package:pizza_coop/bloc/stock_role_bloc.dart';
 import 'package:pizza_coop/bloc/stock_role_event.dart';
 import 'package:pizza_coop/bloc/stock_role_state.dart';
 import 'package:pizza_coop/domain/ingredients/ingredient.dart';
-import 'package:pizza_coop/presentation/stock_role_page.dart';
+import 'package:pizza_coop/presentation/ingredients_stock_page_view.dart';
 
 class MockStockRoleBloc extends MockBloc<StockRoleEvent, StockRoleState>
     implements StockRoleBloc {}
@@ -29,7 +29,7 @@ void main() {
     await widgetTester.pumpWidget(MaterialApp(
       home: BlocProvider<StockRoleBloc>.value(
         value: mockStockRoleBloc!,
-        child: const StockRolePageView(),
+        child: const IngredientsStockPageView(),
       ),
     ));
 
@@ -43,7 +43,7 @@ void main() {
     await widgetTester.pumpWidget(MaterialApp(
       home: BlocProvider<StockRoleBloc>.value(
         value: mockStockRoleBloc!,
-        child: const StockRolePageView(),
+        child: const IngredientsStockPageView(),
       ),
     ));
 
@@ -58,7 +58,7 @@ void main() {
     await widgetTester.pumpWidget(MaterialApp(
       home: BlocProvider<StockRoleBloc>.value(
         value: mockStockRoleBloc!,
-        child: const StockRolePageView(),
+        child: const IngredientsStockPageView(),
       ),
     ));
     expect(find.byType(ListView), findsOneWidget);
@@ -72,7 +72,7 @@ void main() {
     await widgetTester.pumpWidget(MaterialApp(
       home: BlocProvider<StockRoleBloc>.value(
         value: mockStockRoleBloc!,
-        child: const StockRolePageView(),
+        child: const IngredientsStockPageView(),
       ),
     ));
     expect(find.byType(Text), findsNWidgets(2));
