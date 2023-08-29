@@ -8,6 +8,7 @@ import 'package:pizza_coop/bloc/stock_role_event.dart';
 import 'package:pizza_coop/bloc/stock_role_state.dart';
 import 'package:pizza_coop/domain/ingredients/ingredient.dart';
 import 'package:pizza_coop/presentation/ingredients_stock_page_view.dart';
+import 'package:pizza_coop/presentation/stock_role_page.dart';
 
 class MockStockRoleBloc extends MockBloc<StockRoleEvent, StockRoleState>
     implements StockRoleBloc {}
@@ -78,5 +79,17 @@ void main() {
     expect(find.byType(Text), findsNWidgets(2));
     expect(find.text('Error'), findsOneWidget);
     expect(find.text('Stock Role'), findsOneWidget);
+  });
+
+  testWidgets('StockRolePageView has an Inventory stock and catalog buttons', (widgetTester) async {
+    await widgetTester.pumpWidget(MaterialApp(
+      home: BlocProvider<StockRoleBloc>.value(
+        value: mockStockRoleBloc!,
+        child: const StockRolePageView(),
+      ),
+    ));
+    expect(find.byType(ElevatedButton), findsNWidgets(2));
+    expect(find.text('Inventory'), findsOneWidget);
+    expect(find.text('Catalog'), findsOneWidget);
   });
 }
