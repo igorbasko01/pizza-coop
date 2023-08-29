@@ -18,7 +18,40 @@ class StockRolePage extends StatelessWidget {
               catalog: IngredientsCatalog(),
               stock: IngredientsStock(),
               wallet: Wallet())),
-      child: const IngredientsStockPageView(),
+      child: const StockRolePageView(),
+    );
+  }
+}
+
+class StockRolePageView extends StatelessWidget {
+  const StockRolePageView({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Stock Role')),
+      body: Column(
+        children: [
+          ElevatedButton(
+            child: const Text('Inventory'),
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (_) {
+                return BlocProvider.value(
+                    value: BlocProvider.of<StockRoleBloc>(context),
+                    child: const IngredientsStockPageView());
+              }));
+            },
+          ),
+          ElevatedButton(
+            child: const Text('Catalog'),
+            onPressed: () {
+              const snackBar =
+                  SnackBar(content: Text('Catalog under construction'));
+              ScaffoldMessenger.of(context).showSnackBar(snackBar);
+            },
+          ),
+        ],
+      ),
     );
   }
 }
