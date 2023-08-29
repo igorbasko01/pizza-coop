@@ -30,7 +30,8 @@ class StockRolePageView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Stock Role')),
-      body: Column(
+      body: Center(
+          child: Column(
         children: [
           ElevatedButton(
             child: const Text('Inventory'),
@@ -51,7 +52,7 @@ class StockRolePageView extends StatelessWidget {
             },
           ),
         ],
-      ),
+      )),
     );
   }
 }
