@@ -1,4 +1,4 @@
-import 'package:pizza_coop/bloc/stock_role_bloc.dart';
+import 'package:pizza_coop/bloc/ingredients_stock_bloc.dart';
 import 'package:pizza_coop/bloc/stock_role_event.dart';
 import 'package:pizza_coop/bloc/stock_role_state.dart';
 import 'package:pizza_coop/domain/ingredients/ingredient.dart';
@@ -16,12 +16,12 @@ void main() {
     final wallet = Wallet();
     final stockRole =
         StockRole(catalog: stockCatalog, stock: stock, wallet: wallet);
-    final stockRoleBloc = StockRoleBloc(stockRole: stockRole);
+    final stockRoleBloc = IngredientsStockBloc(stockRole: stockRole);
     expect(stockRoleBloc.state.runtimeType, InitialStockRoleState);
     stockRoleBloc.close();
   });
 
-  blocTest<StockRoleBloc, StockRoleState>(
+  blocTest<IngredientsStockBloc, StockRoleState>(
     'StockRoleBloc emits LoadingIngredientsStockRoleState when LoadIngredientsStockRoleEvent is added',
     build: () {
       final stockCatalog = IngredientsCatalog();
@@ -29,7 +29,7 @@ void main() {
       final wallet = Wallet();
       final stockRole =
           StockRole(catalog: stockCatalog, stock: stock, wallet: wallet);
-      return StockRoleBloc(stockRole: stockRole);
+      return IngredientsStockBloc(stockRole: stockRole);
     },
     act: (bloc) => bloc.add(LoadIngredientsStockRoleEvent()),
     expect: () => [
@@ -38,7 +38,7 @@ void main() {
     ],
   );
 
-  blocTest<StockRoleBloc, StockRoleState>(
+  blocTest<IngredientsStockBloc, StockRoleState>(
     'StockRoleBloc emits LoadedIngredientsStockRoleState with Ingredients when LoadIngredientsStockRoleEvent is added',
     build: () {
       final stockCatalog = IngredientsCatalog();
@@ -49,7 +49,7 @@ void main() {
       final wallet = Wallet();
       final stockRole =
           StockRole(catalog: stockCatalog, stock: stock, wallet: wallet);
-      return StockRoleBloc(stockRole: stockRole);
+      return IngredientsStockBloc(stockRole: stockRole);
     },
     act: (bloc) => bloc.add(LoadIngredientsStockRoleEvent()),
     expect: () => [

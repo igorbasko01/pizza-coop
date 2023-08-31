@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pizza_coop/bloc/stock_role_bloc.dart';
+import 'package:pizza_coop/bloc/ingredients_stock_bloc.dart';
 import 'package:pizza_coop/domain/ingredients/ingredients_catalog.dart';
 import 'package:pizza_coop/domain/ingredients/ingredients_stock.dart';
 import 'package:pizza_coop/domain/stock_role.dart';
@@ -13,7 +13,7 @@ class StockRolePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => StockRoleBloc(
+      create: (context) => IngredientsStockBloc(
           stockRole: StockRole(
               catalog: IngredientsCatalog(),
               stock: IngredientsStock(),
@@ -38,7 +38,7 @@ class StockRolePageView extends StatelessWidget {
             onPressed: () {
               Navigator.push(context, MaterialPageRoute(builder: (_) {
                 return BlocProvider.value(
-                    value: BlocProvider.of<StockRoleBloc>(context),
+                    value: BlocProvider.of<IngredientsStockBloc>(context),
                     child: const IngredientsStockPageView());
               }));
             },
