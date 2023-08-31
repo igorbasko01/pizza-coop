@@ -1,5 +1,5 @@
 import 'package:pizza_coop/bloc/ingredients_stock_bloc.dart';
-import 'package:pizza_coop/bloc/stock_role_event.dart';
+import 'package:pizza_coop/bloc/ingredients_stock_event.dart';
 import 'package:pizza_coop/bloc/ingredients_stock_state.dart';
 import 'package:pizza_coop/domain/ingredients/ingredient.dart';
 import 'package:pizza_coop/domain/ingredients/ingredients_catalog.dart';
@@ -31,7 +31,7 @@ void main() {
           StockRole(catalog: stockCatalog, stock: stock, wallet: wallet);
       return IngredientsStockBloc(stockRole: stockRole);
     },
-    act: (bloc) => bloc.add(LoadIngredientsStockRoleEvent()),
+    act: (bloc) => bloc.add(LoadIngredientsStockEvent()),
     expect: () => [
       isA<LoadingIngredientsStockState>(),
       isA<LoadedIngredientsStockState>()
@@ -51,7 +51,7 @@ void main() {
           StockRole(catalog: stockCatalog, stock: stock, wallet: wallet);
       return IngredientsStockBloc(stockRole: stockRole);
     },
-    act: (bloc) => bloc.add(LoadIngredientsStockRoleEvent()),
+    act: (bloc) => bloc.add(LoadIngredientsStockEvent()),
     expect: () => [
       isA<LoadingIngredientsStockState>(),
       predicate<LoadedIngredientsStockState>((state) {

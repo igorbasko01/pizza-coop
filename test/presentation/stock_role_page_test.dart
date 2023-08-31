@@ -4,13 +4,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:pizza_coop/bloc/ingredients_stock_bloc.dart';
-import 'package:pizza_coop/bloc/stock_role_event.dart';
+import 'package:pizza_coop/bloc/ingredients_stock_event.dart';
 import 'package:pizza_coop/bloc/ingredients_stock_state.dart';
 import 'package:pizza_coop/domain/ingredients/ingredient.dart';
 import 'package:pizza_coop/presentation/ingredients_stock_page_view.dart';
 import 'package:pizza_coop/presentation/stock_role_page.dart';
 
-class MockStockRoleBloc extends MockBloc<StockRoleEvent, IngredientsStockState>
+class MockStockRoleBloc extends MockBloc<IngredientsStockEvent, IngredientsStockState>
     implements IngredientsStockBloc {}
 
 void main() {
