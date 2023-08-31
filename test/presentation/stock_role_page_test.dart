@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:pizza_coop/bloc/stock_role_bloc.dart';
+import 'package:pizza_coop/bloc/ingredients_stock_bloc.dart';
 import 'package:pizza_coop/bloc/stock_role_event.dart';
 import 'package:pizza_coop/bloc/stock_role_state.dart';
 import 'package:pizza_coop/domain/ingredients/ingredient.dart';
@@ -11,7 +11,7 @@ import 'package:pizza_coop/presentation/ingredients_stock_page_view.dart';
 import 'package:pizza_coop/presentation/stock_role_page.dart';
 
 class MockStockRoleBloc extends MockBloc<StockRoleEvent, StockRoleState>
-    implements StockRoleBloc {}
+    implements IngredientsStockBloc {}
 
 void main() {
   MockStockRoleBloc? mockStockRoleBloc;
@@ -28,7 +28,7 @@ void main() {
       widgetTester) async {
     when(() => mockStockRoleBloc?.state).thenReturn(InitialStockRoleState());
     await widgetTester.pumpWidget(MaterialApp(
-      home: BlocProvider<StockRoleBloc>.value(
+      home: BlocProvider<IngredientsStockBloc>.value(
         value: mockStockRoleBloc!,
         child: const IngredientsStockPageView(),
       ),
@@ -42,7 +42,7 @@ void main() {
   testWidgets('should show Loading widget when loading stock ingredients', (widgetTester) async {
     when(() => mockStockRoleBloc?.state).thenReturn(LoadingIngredientsStockRoleState());
     await widgetTester.pumpWidget(MaterialApp(
-      home: BlocProvider<StockRoleBloc>.value(
+      home: BlocProvider<IngredientsStockBloc>.value(
         value: mockStockRoleBloc!,
         child: const IngredientsStockPageView(),
       ),
@@ -57,7 +57,7 @@ void main() {
       StockIngredient('Tomato', 10)
     ]));
     await widgetTester.pumpWidget(MaterialApp(
-      home: BlocProvider<StockRoleBloc>.value(
+      home: BlocProvider<IngredientsStockBloc>.value(
         value: mockStockRoleBloc!,
         child: const IngredientsStockPageView(),
       ),
@@ -71,7 +71,7 @@ void main() {
   testWidgets('should show Error message on error', (widgetTester) async {
     when(() => mockStockRoleBloc?.state).thenReturn(ErrorStockRoleState('Error'));
     await widgetTester.pumpWidget(MaterialApp(
-      home: BlocProvider<StockRoleBloc>.value(
+      home: BlocProvider<IngredientsStockBloc>.value(
         value: mockStockRoleBloc!,
         child: const IngredientsStockPageView(),
       ),
@@ -83,7 +83,7 @@ void main() {
 
   testWidgets('StockRolePageView has an Inventory stock and catalog buttons', (widgetTester) async {
     await widgetTester.pumpWidget(MaterialApp(
-      home: BlocProvider<StockRoleBloc>.value(
+      home: BlocProvider<IngredientsStockBloc>.value(
         value: mockStockRoleBloc!,
         child: const StockRolePageView(),
       ),

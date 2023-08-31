@@ -3,10 +3,10 @@ import 'package:pizza_coop/bloc/stock_role_event.dart';
 import 'package:pizza_coop/bloc/stock_role_state.dart';
 import 'package:pizza_coop/domain/stock_role.dart';
 
-class StockRoleBloc extends Bloc<StockRoleEvent, StockRoleState> {
+class IngredientsStockBloc extends Bloc<StockRoleEvent, StockRoleState> {
   final StockRole stockRole;
 
-  StockRoleBloc({required this.stockRole}) : super(InitialStockRoleState()) {
+  IngredientsStockBloc({required this.stockRole}) : super(InitialStockRoleState()) {
     on<LoadIngredientsStockRoleEvent>(_onLoadIngredientsStockRoleEvent);
   }
 

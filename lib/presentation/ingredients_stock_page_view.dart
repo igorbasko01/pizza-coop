@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pizza_coop/bloc/stock_role_bloc.dart';
+import 'package:pizza_coop/bloc/ingredients_stock_bloc.dart';
 import 'package:pizza_coop/bloc/stock_role_event.dart';
 import 'package:pizza_coop/bloc/stock_role_state.dart';
 import 'package:pizza_coop/domain/ingredients/ingredient.dart';
@@ -12,7 +12,7 @@ class IngredientsStockPageView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Stock Role')),
-      body: BlocBuilder<StockRoleBloc, StockRoleState>(
+      body: BlocBuilder<IngredientsStockBloc, StockRoleState>(
         builder: (context, state) {
           if (state is InitialStockRoleState) {
             return const _InitialStockRoleView();
@@ -37,7 +37,7 @@ class _InitialStockRoleView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    BlocProvider.of<StockRoleBloc>(context).add(LoadIngredientsStockRoleEvent());
+    BlocProvider.of<IngredientsStockBloc>(context).add(LoadIngredientsStockRoleEvent());
     return const Center(child: Text('InitialStockRoleView'));
   }
 }
