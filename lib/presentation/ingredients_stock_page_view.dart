@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pizza_coop/bloc/ingredients_stock_bloc.dart';
 import 'package:pizza_coop/bloc/stock_role_event.dart';
-import 'package:pizza_coop/bloc/stock_role_state.dart';
+import 'package:pizza_coop/bloc/ingredients_stock_state.dart';
 import 'package:pizza_coop/domain/ingredients/ingredient.dart';
 
 class IngredientsStockPageView extends StatelessWidget {
@@ -12,16 +12,16 @@ class IngredientsStockPageView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Stock Role')),
-      body: BlocBuilder<IngredientsStockBloc, StockRoleState>(
+      body: BlocBuilder<IngredientsStockBloc, IngredientsStockState>(
         builder: (context, state) {
-          if (state is InitialStockRoleState) {
+          if (state is InitialIngredientsStockState) {
             return const _InitialStockRoleView();
-          } else if (state is LoadingIngredientsStockRoleState) {
+          } else if (state is LoadingIngredientsStockState) {
             return _LoadingIngredientsStockRoleView();
-          } else if (state is LoadedIngredientsStockRoleState) {
+          } else if (state is LoadedIngredientsStockState) {
             return _LoadedIngredientsStockRoleView(
                 ingredientStocks: state.ingredientStocks);
-          } else if (state is ErrorStockRoleState) {
+          } else if (state is ErrorIngredientsStockState) {
             return _ErrorStockRoleView(message: state.message);
           } else {
             return Container();
