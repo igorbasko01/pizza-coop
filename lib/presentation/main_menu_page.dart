@@ -13,7 +13,7 @@ class MainMenuPage extends StatelessWidget {
           child: const Text('Stock Role'),
           onPressed: () {
             Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const StockRolePage()));
+                MaterialPageRoute(builder: (context) => StockRolePage()));
           },
         ),
       ),

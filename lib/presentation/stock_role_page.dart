@@ -8,16 +8,18 @@ import 'package:pizza_coop/domain/wallet.dart';
 import 'package:pizza_coop/presentation/ingredients_stock_page_view.dart';
 
 class StockRolePage extends StatelessWidget {
-  const StockRolePage({Key? key}) : super(key: key);
+  final stockRole = StockRole(
+      catalog: IngredientsCatalog(),
+      stock: IngredientsStock(),
+      wallet: Wallet());
+
+  StockRolePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => IngredientsStockBloc(
-          stockRole: StockRole(
-              catalog: IngredientsCatalog(),
-              stock: IngredientsStock(),
-              wallet: Wallet())),
+          stockRole: stockRole),
       child: const StockRolePageView(),
     );
   }
