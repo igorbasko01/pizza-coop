@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pizza_coop/bloc/ingredients_stock_bloc.dart';
+import 'package:pizza_coop/domain/ingredients/ingredient.dart';
 import 'package:pizza_coop/domain/ingredients/ingredients_catalog.dart';
 import 'package:pizza_coop/domain/ingredients/ingredients_stock.dart';
 import 'package:pizza_coop/domain/stock_role.dart';
@@ -9,8 +10,11 @@ import 'package:pizza_coop/presentation/ingredients_stock_page_view.dart';
 
 class StockRolePage extends StatelessWidget {
   final stockRole = StockRole(
-      catalog: IngredientsCatalog(),
-      stock: IngredientsStock(),
+      catalog: IngredientsCatalog(ingredients: [
+        PurchasableIngredient('flour', 5),
+        PurchasableIngredient('tomato', 10)
+      ]),
+      stock: IngredientsStock(ingredients: [StockIngredient('flour', 10)]),
       wallet: Wallet());
 
   StockRolePage({Key? key}) : super(key: key);
