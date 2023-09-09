@@ -66,6 +66,14 @@ class _LoadedIngredientsCatalogView extends StatelessWidget {
         return ListTile(
           title: Text(ingredients[index].name),
           subtitle: Text(ingredients[index].cost.toString()),
+          trailing: IconButton(
+            icon: const Icon(Icons.add),
+            onPressed: () {
+              final ingredientToBuy = ingredients[index];
+              BlocProvider.of<IngredientsCatalogBloc>(context).add(
+                  BuyIngredientsCatalogEvent(ingredientToBuy, 1));
+            },
+          ),
         );
       },
     );

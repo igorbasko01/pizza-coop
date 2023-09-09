@@ -25,7 +25,8 @@ void main() {
   });
 
   testWidgets('Should show initial state message', (widgetTester) async {
-    when(() => mockIngredientsCatalogBloc?.state).thenReturn(InitialIngredientsCatalogState());
+    when(() => mockIngredientsCatalogBloc?.state)
+        .thenReturn(InitialIngredientsCatalogState());
     await widgetTester.pumpWidget(MaterialApp(
       home: BlocProvider<IngredientsCatalogBloc>.value(
         value: mockIngredientsCatalogBloc!,
@@ -39,7 +40,8 @@ void main() {
   });
 
   testWidgets('Should show loading state message', (widgetTester) async {
-    when(() => mockIngredientsCatalogBloc?.state).thenReturn(LoadingIngredientsCatalogState());
+    when(() => mockIngredientsCatalogBloc?.state)
+        .thenReturn(LoadingIngredientsCatalogState());
     await widgetTester.pumpWidget(MaterialApp(
       home: BlocProvider<IngredientsCatalogBloc>.value(
         value: mockIngredientsCatalogBloc!,
@@ -51,7 +53,8 @@ void main() {
   });
 
   testWidgets('Should show loaded state message', (widgetTester) async {
-    when(() => mockIngredientsCatalogBloc?.state).thenReturn(LoadedIngredientsCatalogState([
+    when(() => mockIngredientsCatalogBloc?.state).thenReturn(
+        LoadedIngredientsCatalogState([
       PurchasableIngredient('Flour', 10),
       PurchasableIngredient('Tomato', 10)
     ]));
@@ -64,5 +67,26 @@ void main() {
 
     expect(find.byType(ListView), findsOneWidget);
     expect(find.byType(ListTile), findsNWidgets(2));
+  });
+
+  testWidgets('Invokes BuyIngredientsCatalogEvent when Buy button is pressed',
+      (widgetTester) async {
+    final flourIngredient = PurchasableIngredient('Flour', 10);
+    when(() => mockIngredientsCatalogBloc?.state).thenReturn(
+        LoadedIngredientsCatalogState([
+      flourIngredient,
+      PurchasableIngredient('Tomato', 10)
+    ]));
+    await widgetTester.pumpWidget(MaterialApp(
+      home: BlocProvider<IngredientsCatalogBloc>.value(
+        value: mockIngredientsCatalogBloc!,
+        child: const IngredientsCatalogPageView(),
+      ),
+    ));
+
+    await widgetTester.tap(find.byType(IconButton).first);
+    verify(() => mockIngredientsCatalogBloc?.add(
+            BuyIngredientsCatalogEvent(flourIngredient, 1)))
+        .called(1);
   });
 }

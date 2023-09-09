@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pizza_coop/bloc/ingredients_catalog_event.dart';
 import 'package:pizza_coop/bloc/ingredients_catalog_state.dart';
@@ -10,6 +12,7 @@ class IngredientsCatalogBloc
   IngredientsCatalogBloc({required this.stockRole})
       : super(InitialIngredientsCatalogState()) {
     on<LoadIngredientsCatalogEvent>(_onLoadIngredientsCatalogEvent);
+    on<BuyIngredientsCatalogEvent>(_onBuyIngredientsCatalogEvent);
   }
 
   void _onLoadIngredientsCatalogEvent(
@@ -17,6 +20,10 @@ class IngredientsCatalogBloc
     Emitter<IngredientsCatalogState> emit,
   ) {
     emit(LoadingIngredientsCatalogState());
+    emit(LoadedIngredientsCatalogState(stockRole.listCatalog()));
+  }
+
+  void _onBuyIngredientsCatalogEvent(BuyIngredientsCatalogEvent event, Emitter<IngredientsCatalogState> emit) {
     emit(LoadedIngredientsCatalogState(stockRole.listCatalog()));
   }
 }
