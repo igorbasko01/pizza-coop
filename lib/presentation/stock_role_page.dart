@@ -17,7 +17,7 @@ class StockRolePage extends StatelessWidget {
         PurchasableIngredient('tomato', 10)
       ]),
       stock: IngredientsStock(ingredients: [StockIngredient('flour', 10)]),
-      wallet: Wallet());
+      wallet: Wallet(balance: 20));
 
   StockRolePage({Key? key}) : super(key: key);
 

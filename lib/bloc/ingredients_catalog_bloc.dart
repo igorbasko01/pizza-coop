@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pizza_coop/bloc/ingredients_catalog_event.dart';
 import 'package:pizza_coop/bloc/ingredients_catalog_state.dart';
+import 'package:pizza_coop/domain/ingredients/ingredient.dart';
 import 'package:pizza_coop/domain/stock_role.dart';
 
 class IngredientsCatalogBloc
@@ -24,6 +25,7 @@ class IngredientsCatalogBloc
   }
 
   void _onBuyIngredientsCatalogEvent(BuyIngredientsCatalogEvent event, Emitter<IngredientsCatalogState> emit) {
+    stockRole.buy(StockIngredient(event.ingredient.name, event.amount.toDouble()));
     emit(LoadedIngredientsCatalogState(stockRole.listCatalog()));
   }
 }
