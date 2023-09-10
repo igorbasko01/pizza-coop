@@ -59,4 +59,29 @@ void main() {
       })
     ],
   );
+
+  blocTest<IngredientsCatalogBloc, IngredientsCatalogState>(
+    'IngredientsCatalogBloc emits LoadedIngredientsCatalogState with Ingredients when BuyIngredientsCatalogEvent is added',
+    build: () {
+      final stockCatalog = IngredientsCatalog(ingredients: [
+        PurchasableIngredient('Flour', 5),
+        PurchasableIngredient('Tomato', 10)
+      ]);
+      final stock =
+          IngredientsStock(ingredients: [StockIngredient('Flour', 10)]);
+      final wallet = Wallet(balance: 20);
+      final stockRole =
+          StockRole(catalog: stockCatalog, stock: stock, wallet: wallet);
+      return IngredientsCatalogBloc(stockRole: stockRole);
+    },
+    act: (bloc) => bloc
+        .add(BuyIngredientsCatalogEvent(PurchasableIngredient('Flour', 5), 1)),
+    verify: (bloc) {
+      final stockIngredient = bloc.stockRole.stock.ingredients.firstWhere(
+          (element) => element.name == 'Flour',
+          orElse: () => throw Exception('Ingredient not found'));
+      expect(bloc.stockRole.wallet.balance, 15);
+      expect(stockIngredient.amount, 11);
+    },
+  );
 }
