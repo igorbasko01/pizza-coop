@@ -21,11 +21,11 @@ class IngredientsCatalogBloc
     Emitter<IngredientsCatalogState> emit,
   ) {
     emit(LoadingIngredientsCatalogState());
-    emit(LoadedIngredientsCatalogState(stockRole.listCatalog()));
+    emit(LoadedIngredientsCatalogState(stockRole.listCatalog(), stockRole.wallet));
   }
 
   void _onBuyIngredientsCatalogEvent(BuyIngredientsCatalogEvent event, Emitter<IngredientsCatalogState> emit) {
     stockRole.buy(StockIngredient(event.ingredient.name, event.amount.toDouble()));
-    emit(LoadedIngredientsCatalogState(stockRole.listCatalog()));
+    emit(LoadedIngredientsCatalogState(stockRole.listCatalog(), stockRole.wallet));
   }
 }
