@@ -13,7 +13,17 @@ class IngredientsCatalogPageView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Ingredients Catalog')),
-      body: BlocBuilder<IngredientsCatalogBloc, IngredientsCatalogState>(
+      body: BlocConsumer<IngredientsCatalogBloc, IngredientsCatalogState>(
+        listener: (context, state) {
+          if (state is NotificationMessageCatalogState) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(state.message),
+                duration: const Duration(seconds: 1),
+              ),
+            );
+          }
+        },
         builder: (context, state) {
           if (state is InitialIngredientsCatalogState) {
             return const _InitialIngredientsCatalogView();

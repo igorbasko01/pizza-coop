@@ -19,3 +19,9 @@ class ErrorIngredientsCatalogState extends IngredientsCatalogState {
 
   ErrorIngredientsCatalogState(this.message);
 }
+
+class NotificationMessageCatalogState extends IngredientsCatalogState {
+  final String message;
+
+  NotificationMessageCatalogState(this.message);
+}

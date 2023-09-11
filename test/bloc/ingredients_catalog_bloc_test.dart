@@ -84,4 +84,28 @@ void main() {
       expect(stockIngredient.amount, 11);
     },
   );
+
+  blocTest<IngredientsCatalogBloc, IngredientsCatalogState>(
+      'emits NotificationMessageState with insufficient funds message',
+      build: () {
+        final stockCatalog = IngredientsCatalog(ingredients: [
+          PurchasableIngredient('Flour', 5),
+          PurchasableIngredient('Tomato', 10)
+        ]);
+        final stock =
+            IngredientsStock(ingredients: [StockIngredient('Flour', 10)]);
+        final wallet = Wallet(balance: 20);
+        final stockRole =
+            StockRole(catalog: stockCatalog, stock: stock, wallet: wallet);
+        return IngredientsCatalogBloc(stockRole: stockRole);
+      },
+      act: (bloc) => bloc.add(
+          BuyIngredientsCatalogEvent(PurchasableIngredient('Flour', 5), 5)),
+      expect: () => [
+            predicate<NotificationMessageCatalogState>((state) {
+              return state.message == 'Insufficient funds to buy Flour';
+            }),
+            isA<LoadedIngredientsCatalogState>()
+          ]
+  );
 }

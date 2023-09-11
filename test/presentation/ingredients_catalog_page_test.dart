@@ -7,6 +7,9 @@ import 'package:pizza_coop/bloc/ingredients_catalog_bloc.dart';
 import 'package:pizza_coop/bloc/ingredients_catalog_event.dart';
 import 'package:pizza_coop/bloc/ingredients_catalog_state.dart';
 import 'package:pizza_coop/domain/ingredients/ingredient.dart';
+import 'package:pizza_coop/domain/ingredients/ingredients_catalog.dart';
+import 'package:pizza_coop/domain/ingredients/ingredients_stock.dart';
+import 'package:pizza_coop/domain/stock_role.dart';
 import 'package:pizza_coop/domain/wallet.dart';
 import 'package:pizza_coop/presentation/ingredients_catalog_page_view.dart';
 
@@ -89,5 +92,28 @@ void main() {
     verify(() => mockIngredientsCatalogBloc?.add(
             BuyIngredientsCatalogEvent(flourIngredient, 1)))
         .called(1);
+  });
+
+  testWidgets('Shows error SnackBar when insufficient funds on buy', (widgetTester) async {
+    final ingredientsCatalogBloc = IngredientsCatalogBloc(
+        stockRole: StockRole(
+           stock: IngredientsStock(),
+            wallet: Wallet(balance: 0),
+            catalog: IngredientsCatalog(ingredients: [
+              PurchasableIngredient('Flour', 10),
+              PurchasableIngredient('Tomato', 10)
+            ])));
+    await widgetTester.pumpWidget(MaterialApp(
+      home: BlocProvider<IngredientsCatalogBloc>.value(
+        value: ingredientsCatalogBloc,
+        child: const IngredientsCatalogPageView(),
+      ),
+    ));
+
+    await widgetTester.pumpAndSettle();
+    await widgetTester.tap(find.byType(IconButton).first);
+    await widgetTester.pumpAndSettle();
+    expect(find.byType(SnackBar), findsOneWidget);
+    expect(find.text('Insufficient funds to buy Flour'), findsOneWidget);
   });
 }
