@@ -7,6 +7,7 @@ import 'package:pizza_coop/bloc/ingredients_catalog_bloc.dart';
 import 'package:pizza_coop/bloc/ingredients_catalog_event.dart';
 import 'package:pizza_coop/bloc/ingredients_catalog_state.dart';
 import 'package:pizza_coop/domain/ingredients/ingredient.dart';
+import 'package:pizza_coop/domain/wallet.dart';
 import 'package:pizza_coop/presentation/ingredients_catalog_page_view.dart';
 
 class MockIngredientsCatalogBloc
@@ -57,7 +58,7 @@ void main() {
         LoadedIngredientsCatalogState([
       PurchasableIngredient('Flour', 10),
       PurchasableIngredient('Tomato', 10)
-    ]));
+    ], Wallet(balance: 20)));
     await widgetTester.pumpWidget(MaterialApp(
       home: BlocProvider<IngredientsCatalogBloc>.value(
         value: mockIngredientsCatalogBloc!,
@@ -76,7 +77,7 @@ void main() {
         LoadedIngredientsCatalogState([
       flourIngredient,
       PurchasableIngredient('Tomato', 10)
-    ]));
+    ], Wallet(balance: 20)));
     await widgetTester.pumpWidget(MaterialApp(
       home: BlocProvider<IngredientsCatalogBloc>.value(
         value: mockIngredientsCatalogBloc!,

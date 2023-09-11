@@ -4,6 +4,7 @@ import 'package:pizza_coop/bloc/ingredients_catalog_bloc.dart';
 import 'package:pizza_coop/bloc/ingredients_catalog_event.dart';
 import 'package:pizza_coop/bloc/ingredients_catalog_state.dart';
 import 'package:pizza_coop/domain/ingredients/ingredient.dart';
+import 'package:pizza_coop/domain/wallet.dart';
 
 class IngredientsCatalogPageView extends StatelessWidget {
   const IngredientsCatalogPageView({Key? key}) : super(key: key);
@@ -20,7 +21,7 @@ class IngredientsCatalogPageView extends StatelessWidget {
             return _LoadingIngredientsCatalogView();
           } else if (state is LoadedIngredientsCatalogState) {
             return _LoadedIngredientsCatalogView(
-                ingredients: state.ingredients);
+                ingredients: state.ingredients, wallet: state.wallet);
           } else if (state is ErrorIngredientsCatalogState) {
             return _ErrorIngredientsCatalogView(message: state.message);
           } else {
@@ -54,8 +55,33 @@ class _LoadingIngredientsCatalogView extends StatelessWidget {
 
 class _LoadedIngredientsCatalogView extends StatelessWidget {
   final List<PurchasableIngredient> ingredients;
+  final Wallet wallet;
 
-  const _LoadedIngredientsCatalogView({Key? key, required this.ingredients})
+  const _LoadedIngredientsCatalogView(
+      {Key? key, required this.ingredients, required this.wallet})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+        children: [
+          Padding(padding: EdgeInsets.all(16.0),
+            child: Text(
+                'Balance ${wallet.balance}',
+                style: const TextStyle(fontSize: 24))
+          ),
+          Expanded(
+            child: _IngredientsCatalogListView(ingredients: ingredients),
+          ),
+        ]
+    );
+  }
+}
+
+class _IngredientsCatalogListView extends StatelessWidget {
+  final List<PurchasableIngredient> ingredients;
+
+  const _IngredientsCatalogListView({Key? key, required this.ingredients})
       : super(key: key);
 
   @override
