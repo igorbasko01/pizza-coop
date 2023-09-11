@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pizza_coop/bloc/ingredients_catalog_event.dart';
 import 'package:pizza_coop/bloc/ingredients_catalog_state.dart';
 import 'package:pizza_coop/domain/ingredients/ingredient.dart';
+import 'package:pizza_coop/domain/ingredients/ingredients_catalog.dart';
 import 'package:pizza_coop/domain/stock_role.dart';
 
 class IngredientsCatalogBloc
@@ -25,7 +26,11 @@ class IngredientsCatalogBloc
   }
 
   void _onBuyIngredientsCatalogEvent(BuyIngredientsCatalogEvent event, Emitter<IngredientsCatalogState> emit) {
-    stockRole.buy(StockIngredient(event.ingredient.name, event.amount.toDouble()));
+    try {
+      stockRole.buy(StockIngredient(event.ingredient.name, event.amount.toDouble()));
+    } on InsufficientFundsException {
+      emit(NotificationMessageCatalogState('Insufficient funds to buy ${event.ingredient.name}'));
+    }
     emit(LoadedIngredientsCatalogState(stockRole.listCatalog(), stockRole.wallet));
   }
 }
