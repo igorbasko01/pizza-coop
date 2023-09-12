@@ -28,6 +28,7 @@ class IngredientsCatalogBloc
   void _onBuyIngredientsCatalogEvent(BuyIngredientsCatalogEvent event, Emitter<IngredientsCatalogState> emit) {
     try {
       stockRole.buy(StockIngredient(event.ingredient.name, event.amount.toDouble()));
+      emit(NotificationMessageCatalogState('Bought ${event.ingredient.name}'));
     } on InsufficientFundsException {
       emit(NotificationMessageCatalogState('Insufficient funds to buy ${event.ingredient.name}'));
     }

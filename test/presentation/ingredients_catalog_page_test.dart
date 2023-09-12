@@ -116,4 +116,27 @@ void main() {
     expect(find.byType(SnackBar), findsOneWidget);
     expect(find.text('Insufficient funds to buy Flour'), findsOneWidget);
   });
+
+  testWidgets('Shows SnackBar with bought ingredient', (widgetTester) async {
+    final ingredientsCatalogBloc = IngredientsCatalogBloc(
+        stockRole: StockRole(
+            stock: IngredientsStock(),
+            wallet: Wallet(balance: 20),
+            catalog: IngredientsCatalog(ingredients: [
+              PurchasableIngredient('Flour', 10),
+              PurchasableIngredient('Tomato', 10)
+            ])));
+    await widgetTester.pumpWidget(MaterialApp(
+      home: BlocProvider<IngredientsCatalogBloc>.value(
+        value: ingredientsCatalogBloc,
+        child: const IngredientsCatalogPageView(),
+      ),
+    ));
+
+    await widgetTester.pumpAndSettle();
+    await widgetTester.tap(find.byType(IconButton).first);
+    await widgetTester.pumpAndSettle();
+    expect(find.byType(SnackBar), findsOneWidget);
+    expect(find.text('Bought Flour'), findsOneWidget);
+  });
 }

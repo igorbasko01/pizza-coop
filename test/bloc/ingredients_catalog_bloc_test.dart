@@ -106,6 +106,28 @@ void main() {
               return state.message == 'Insufficient funds to buy Flour';
             }),
             isA<LoadedIngredientsCatalogState>()
-          ]
-  );
+          ]);
+
+  blocTest<IngredientsCatalogBloc, IngredientsCatalogState>(
+      'emit NotificationMessageState with ingredient bought',
+      build: () {
+        final stockCatalog = IngredientsCatalog(ingredients: [
+          PurchasableIngredient('Flour', 5),
+          PurchasableIngredient('Tomato', 10)
+        ]);
+        final stock =
+            IngredientsStock(ingredients: [StockIngredient('Flour', 10)]);
+        final wallet = Wallet(balance: 20);
+        final stockRole =
+            StockRole(catalog: stockCatalog, stock: stock, wallet: wallet);
+        return IngredientsCatalogBloc(stockRole: stockRole);
+      },
+      act: (bloc) => bloc.add(
+          BuyIngredientsCatalogEvent(PurchasableIngredient('Flour', 5), 1)),
+      expect: () => [
+            predicate<NotificationMessageCatalogState>((state) {
+              return state.message == 'Bought Flour';
+            }),
+            isA<LoadedIngredientsCatalogState>()
+          ]);
 }
