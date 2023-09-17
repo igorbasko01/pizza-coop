@@ -6,12 +6,13 @@ import 'package:test/test.dart';
 
 void main() {
   test('Customer is created with a name', () {
-    var customer = Customer('John');
+    var customer = Customer(1, 'John');
+    expect(customer.id, 1);
     expect(customer.name, 'John');
   });
 
   test('Customer selects a recipe from a menu', () {
-    var customer = Customer('John');
+    var customer = Customer(1, 'John');
     var menu = Menu(recipes: [
       Recipe('Pizza', [
         StockIngredient('Flour', 1.5),

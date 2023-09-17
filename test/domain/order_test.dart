@@ -11,7 +11,7 @@ void main() {
       StockIngredient('Tomato Sauce', 0.5),
       StockIngredient('Cheese', 2.0),
     ]);
-    var customer = Customer('John Doe');
+    var customer = Customer(1, 'John Doe');
     var order = Order(recipe, customer);
     expect(order.recipe, recipe);
     expect(order.customer, customer);
