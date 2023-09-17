@@ -6,4 +6,16 @@ class Order {
   final Customer customer;
 
   Order(this.recipe, this.customer);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is Order &&
+      other.recipe == recipe &&
+      other.customer == customer;
+  }
+
+  @override
+  int get hashCode => recipe.hashCode ^ customer.hashCode;
 }
