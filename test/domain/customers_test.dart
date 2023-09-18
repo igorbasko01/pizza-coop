@@ -11,4 +11,12 @@ void main() {
     var customersClass = Customers(customers);
     expect(customersClass.customers, customers);
   });
+
+  test('Customers class should throw exception on duplicate customer ids', () {
+    var customers = [
+      Customer(1, 'John Doe'),
+      Customer(1, 'Jane Doe'),
+    ];
+    expect(() => Customers(customers), throwsException);
+  });
 }
