@@ -19,6 +19,16 @@ class Customers {
     }
     return CustomersValidationResult(true, '');
   }
+
+  /// Get customer by customer id
+  ///
+  /// Throws CustomersNotFoundException if customer id is not found
+  Customer getCustomer(int customerId) {
+    var customer = customers.firstWhere((e) => e.id == customerId,
+        orElse: () =>
+            throw CustomersNotFoundException(customerId));
+    return customer;
+  }
 }
 
 class CustomersValidationResult {
@@ -32,4 +42,15 @@ class CustomersValidationException implements Exception {
   final String message;
 
   CustomersValidationException(this.message);
+}
+
+class CustomersNotFoundException implements Exception {
+  final int customerId;
+
+  CustomersNotFoundException(this.customerId);
+
+  @override
+  String toString() {
+    return 'Customer not found: $customerId';
+  }
 }
