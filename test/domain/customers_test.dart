@@ -19,4 +19,25 @@ void main() {
     ];
     expect(() => Customers(customers), throwsException);
   });
+
+  test('Customers getCustomer should return customer by customer id', () {
+    var customers = [
+      Customer(1, 'John Doe'),
+      Customer(2, 'Jane Doe'),
+    ];
+    var customersClass = Customers(customers);
+    var customer = customersClass.getCustomer(1);
+    expect(customer, customers.first);
+  });
+
+  test('Customers getCustomer should throw exception on invalid customer id',
+      () {
+    var customers = [
+      Customer(1, 'John Doe'),
+      Customer(2, 'Jane Doe'),
+    ];
+    var customersClass = Customers(customers);
+    expect(() => customersClass.getCustomer(3),
+        throwsA(isA<CustomersNotFoundException>()));
+  });
 }
