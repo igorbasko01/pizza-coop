@@ -1,5 +1,6 @@
 import 'package:pizza_coop/domain/ingredients/ingredient.dart';
 import 'package:pizza_coop/domain/ingredients/ingredients_catalog.dart';
+import 'package:pizza_coop/utils/result.dart';
 
 class IngredientsStock {
   final List<StockIngredient> _ingredients = [];
@@ -13,23 +14,33 @@ class IngredientsStock {
   }
 
   void add(StockIngredient ingredient) {
-    try {
-      var existingIngredient = _findFirstIngredient(ingredient.name);
-      existingIngredient.add(ingredient.amount);
-    } on IngredientNotFoundException {
-      _ingredients.add(ingredient);
-      return;
+    var existingIngredient = _findFirstIngredient(ingredient.name);
+    if (existingIngredient.isSuccess) {
+      existingIngredient.value!.add(ingredient.amount);
+    } else {
+      if (existingIngredient.exception is IngredientNotFoundException) {
+        _ingredients.add(ingredient);
+      } else {
+        throw existingIngredient.exception!;
+      }
     }
   }
 
   void use(StockIngredient ingredient) {
     var existingIngredient = _findFirstIngredient(ingredient.name);
-    _subtract(existingIngredient, ingredient);
+    if (existingIngredient.isSuccess) {
+      _subtract(existingIngredient.value!, ingredient);
+    } else {
+      throw existingIngredient.exception!;
+    }
   }
 
   void useAll(List<StockIngredient> ingredients) {
-    if (_isEnoughIngredients(ingredients)) {
+    var result = _isEnoughIngredients(ingredients);
+    if (result.isSuccess) {
       ingredients.forEach(use);
+    } else {
+      throw result.exception!;
     }
   }
 
@@ -43,22 +54,30 @@ class IngredientsStock {
     }
   }
 
-  bool _isEnoughIngredients(List<StockIngredient> ingredients) {
-    return ingredients.every((ingredient) {
+  Result<void> _isEnoughIngredients(List<StockIngredient> ingredients) {
+    for (var ingredient in ingredients) {
       var existingIngredient = _findFirstIngredient(ingredient.name);
-      var isEnough = existingIngredient.amount >= ingredient.amount;
-      if (!isEnough) {
-        throw InsufficientIngredientException(
-            "Insufficient ingredient, needed: ${ingredient.amount}, available: ${existingIngredient.amount}");
+      if (existingIngredient.isFailure) {
+        return Result.failure(existingIngredient.exception!);
       }
-      return isEnough;
-    });
+
+      var isEnough = existingIngredient.value!.amount >= ingredient.amount;
+      if (!isEnough) {
+        return Result.failure(InsufficientIngredientException(
+            "Insufficient ingredient, needed: ${ingredient.amount}, available: ${existingIngredient.value!.amount}"));
+      }
+    }
+    return Result.success(null);
   }
 
-  StockIngredient _findFirstIngredient(String name) {
-    return _ingredients.firstWhere(
-        (existingIngredient) => existingIngredient.name == name,
-        orElse: () =>
-            throw IngredientNotFoundException("Ingredient $name not found"));
+  Result<StockIngredient> _findFirstIngredient(String name) {
+    try {
+      var ingredient = _ingredients
+          .firstWhere((existingIngredient) => existingIngredient.name == name);
+      return Result.success(ingredient);
+    } on StateError {
+      return Result.failure(
+          IngredientNotFoundException("Ingredient $name not found in stock"));
+    }
   }
 }
