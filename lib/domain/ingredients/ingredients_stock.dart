@@ -35,12 +35,13 @@ class IngredientsStock {
     }
   }
 
-  void useAll(List<StockIngredient> ingredients) {
+  Result<void> useAll(List<StockIngredient> ingredients) {
     var result = _isEnoughIngredients(ingredients);
     if (result.isSuccess) {
       ingredients.forEach(use);
+      return Result.success(null);
     } else {
-      throw result.exception!;
+      return result;
     }
   }
 

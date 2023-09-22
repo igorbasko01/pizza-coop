@@ -56,13 +56,15 @@ void main() {
   test('Stock use throws exception if there is insufficient ingredient', () {
     var stock = IngredientsStock();
     stock.add(StockIngredient('Flour', 1.5));
-    expect(() => stock.use(StockIngredient('Flour', 2.0)), throwsA(isA<InsufficientIngredientException>()));
+    expect(() => stock.use(StockIngredient('Flour', 2.0)),
+        throwsA(isA<InsufficientIngredientException>()));
   });
 
   test('Stock use throws exception if there is no such ingredient', () {
     var stock = IngredientsStock();
     stock.add(StockIngredient('Flour', 1.5));
-    expect(() => stock.use(StockIngredient('Tomato Sauce', 1.0)), throwsA(isA<IngredientNotFoundException>()));
+    expect(() => stock.use(StockIngredient('Tomato Sauce', 1.0)),
+        throwsA(isA<IngredientNotFoundException>()));
   });
 
   test('Stock use should remove ingredient if reaches zero amount', () {
@@ -92,16 +94,20 @@ void main() {
     expect(stock.ingredients[2].amount, 1.0);
   });
 
-  test('Stock useAll wont subtract any ingredient if one ingredient has not enough amount', () {
+  test(
+      'Stock useAll wont subtract any ingredient if one ingredient has not enough amount',
+      () {
     var stock = IngredientsStock();
     stock.add(StockIngredient('Flour', 1.5));
     stock.add(StockIngredient('Tomato Sauce', 1.0));
     stock.add(StockIngredient('Cheese', 2.0));
-    expect(() => stock.useAll([
-      StockIngredient('Flour', 1.0),
-      StockIngredient('Tomato Sauce', 0.5),
-      StockIngredient('Cheese', 3.0),
-    ]), throwsA(isA<InsufficientIngredientException>()));
+    expect(
+        stock.useAll([
+          StockIngredient('Flour', 1.0),
+          StockIngredient('Tomato Sauce', 0.5),
+          StockIngredient('Cheese', 3.0),
+        ]).exception,
+        isA<InsufficientIngredientException>());
     expect(stock.ingredients, isNotEmpty);
     expect(stock.ingredients.length, 3);
     expect(stock.ingredients[0].name, 'Flour');
@@ -115,7 +121,8 @@ void main() {
   test('Stock useAll throws exception if there is no such ingredient', () {
     var stock = IngredientsStock();
     stock.add(StockIngredient('Flour', 1.5));
-    expect(() => stock.useAll([StockIngredient('Tomato Sauce', 1.0)]), throwsA(isA<IngredientNotFoundException>()));
+    expect(stock.useAll([StockIngredient('Tomato Sauce', 1.0)]).exception,
+        isA<IngredientNotFoundException>());
   });
 
   test('Stock useAll should remove ingredient if reaches zero amount', () {
