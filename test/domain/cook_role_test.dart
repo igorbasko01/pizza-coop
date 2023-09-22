@@ -10,14 +10,14 @@ void main() {
   test('Cook Role Initializes with an Oven', () {
     var oven = Oven();
     var ingredientsStock = IngredientsStock();
-    var role = CookRole(oven, ingredientsStock);
+    var role = CookRole(oven, ingredientsStock, []);
     expect(role.oven, isNotNull);
   });
 
   test('Cook Role Initializes with an IngredientsStock', () {
     var oven = Oven();
     var ingredientsStock = IngredientsStock();
-    var role = CookRole(oven, ingredientsStock);
+    var role = CookRole(oven, ingredientsStock, []);
     expect(role.ingredientsStock, isNotNull);
   });
 
@@ -33,7 +33,7 @@ void main() {
       StockIngredient('Tomato Sauce', 0.5),
       StockIngredient('Cheese', 2.0),
     ]);
-    var role = CookRole(oven, ingredientsStock);
+    var role = CookRole(oven, ingredientsStock, []);
     var pizza = role.bake(margheritaRecipe);
     expect(pizza.name, 'Margherita');
   });
@@ -50,7 +50,7 @@ void main() {
       StockIngredient('Tomato Sauce', 0.5),
       StockIngredient('Cheese', 2.0),
     ]);
-    var role = CookRole(oven, ingredientsStock);
+    var role = CookRole(oven, ingredientsStock, []);
     role.bake(margheritaRecipe);
     expect(ingredientsStock.ingredients, isEmpty);
   });
@@ -68,7 +68,7 @@ void main() {
       StockIngredient('Cheese', 2.0),
       StockIngredient('Pepperoni', 1.0),
     ]);
-    var role = CookRole(oven, ingredientsStock);
+    var role = CookRole(oven, ingredientsStock, []);
     expect(() => role.bake(margheritaRecipe),
         throwsA(isA<IngredientNotFoundException>()));
     expect(ingredientsStock.ingredients, isNotEmpty);
@@ -92,7 +92,7 @@ void main() {
       StockIngredient('Tomato Sauce', 0.5),
       StockIngredient('Cheese', 3.0),
     ]);
-    var role = CookRole(oven, ingredientsStock);
+    var role = CookRole(oven, ingredientsStock, []);
     expect(() => role.bake(margheritaRecipe),
         throwsA(isA<InsufficientIngredientException>()));
   });
@@ -109,7 +109,7 @@ void main() {
       StockIngredient('Tomato Sauce', 0.5),
       StockIngredient('Cheese', 3.0),
     ]);
-    var role = CookRole(oven, ingredientsStock);
+    var role = CookRole(oven, ingredientsStock, []);
     expect(() => role.bake(margheritaRecipe),
         throwsA(isA<InsufficientIngredientException>()));
     expect(ingredientsStock.ingredients, isNotEmpty);
@@ -119,5 +119,14 @@ void main() {
       StockIngredient('Tomato Sauce', 0.5),
       StockIngredient('Cheese', 2.0),
     ]);
+  });
+
+  test('Cook Role holds an ingredients list for prepared ingredients', () {
+    var oven = Oven();
+    var ingredientsStock = IngredientsStock();
+    List<StockIngredient> preparedIngredients = [];
+    var role = CookRole(oven, ingredientsStock, preparedIngredients);
+    expect(role.preparedIngredients, isNotNull);
+    expect(role.preparedIngredients, isEmpty);
   });
 }
