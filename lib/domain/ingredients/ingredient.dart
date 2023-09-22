@@ -36,4 +36,15 @@ class StockIngredient extends Ingredient {
     }
     _amount -= amount;
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is StockIngredient &&
+          runtimeType == other.runtimeType &&
+          name == other.name &&
+          _amount == other._amount;
+
+  @override
+  int get hashCode => name.hashCode ^ _amount.hashCode;
 }
