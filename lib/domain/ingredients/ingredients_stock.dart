@@ -82,3 +82,8 @@ class IngredientsStock {
     }
   }
 }
+
+class PreparedIngredients extends IngredientsStock {
+  PreparedIngredients({List<StockIngredient>? ingredients})
+      : super(ingredients: ingredients);
+}

@@ -6,11 +6,16 @@ import 'package:pizza_coop/domain/recipe.dart';
 class CookRole {
   final Oven oven;
   final IngredientsStock ingredientsStock;
-  final List<StockIngredient> preparedIngredients;
+  final PreparedIngredients preparedIngredients;
 
   CookRole(this.oven, this.ingredientsStock, this.preparedIngredients);
 
-  StockIngredient bake(Recipe recipe) {
-    return oven.bake(recipe, ingredientsStock);
+  void bake(Recipe recipe) {
+    var result = oven.bake(recipe, ingredientsStock);
+    if (result.isSuccess) {
+      preparedIngredients.add(result.value!);
+    } else {
+      throw result.exception!;
+    }
   }
 }
