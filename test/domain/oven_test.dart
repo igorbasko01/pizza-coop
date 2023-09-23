@@ -17,13 +17,13 @@ void main() {
     stock.add(StockIngredient('Flour', 1.5));
     stock.add(StockIngredient('Tomato Sauce', 0.5));
     stock.add(StockIngredient('Cheese', 2.0));
-    var pizza = oven.bake(recipe, stock);
-    expect(pizza, isNotNull);
-    expect(pizza.name, 'Pizza');
-    expect(pizza.amount, 1);
+    var result = oven.bake(recipe, stock);
+    expect(result.isSuccess, true);
+    expect(result.value!.name, 'Pizza');
+    expect(result.value!.amount, 1);
   });
 
-  test('Oven throws an exception when not enough ingredients', () {
+  test('Oven returns an exception when not enough ingredients', () {
     var oven = Oven();
     var recipe = Recipe('Pizza', [
       StockIngredient('Flour', 1.5),
@@ -34,10 +34,10 @@ void main() {
     stock.add(StockIngredient('Flour', 1.5));
     stock.add(StockIngredient('Tomato Sauce', 0.5));
     stock.add(StockIngredient('Cheese', 1.0));
-    expect(() => oven.bake(recipe, stock), throwsA(isA<InsufficientIngredientException>()));
+    expect(oven.bake(recipe, stock).exception, isA<InsufficientIngredientException>());
   });
 
-  test('Oven throws an exception when ingredient is not found in stock', () {
+  test('Oven returns an exception when ingredient is not found in stock', () {
     var oven = Oven();
     var recipe = Recipe('Pizza', [
       StockIngredient('Flour', 1.5),
@@ -47,7 +47,7 @@ void main() {
     var stock = IngredientsStock();
     stock.add(StockIngredient('Flour', 1.5));
     stock.add(StockIngredient('Tomato Sauce', 0.5));
-    expect(() => oven.bake(recipe, stock), throwsA(isA<IngredientNotFoundException>()));
+    expect(oven.bake(recipe, stock).exception, isA<IngredientNotFoundException>());
   });
 
   test('Oven bake removes ingredients from stock', () {
