@@ -1,6 +1,7 @@
 import 'package:pizza_coop/domain/customer.dart';
 import 'package:pizza_coop/domain/customers.dart';
 import 'package:pizza_coop/domain/ingredients/ingredient.dart';
+import 'package:pizza_coop/domain/ingredients/ingredients_stock.dart';
 import 'package:pizza_coop/domain/menu.dart';
 import 'package:pizza_coop/domain/order.dart';
 import 'package:pizza_coop/domain/recipe.dart';
@@ -24,7 +25,7 @@ void main() {
         StockIngredient('Tomato Sauce', 0.5),
       ]),
     ]);
-    var waiter = WaiterRole(menu, customers);
+    var waiter = WaiterRole(menu, customers, PreparedIngredients());
     expect(waiter.customers, customers);
   });
 
@@ -44,10 +45,18 @@ void main() {
         StockIngredient('Tomato Sauce', 0.5),
       ]),
     ]);
-    var waiter = WaiterRole(menu, customers);
+    var waiter = WaiterRole(menu, customers, PreparedIngredients());
     var customer = customers.getCustomer(1);
     var order = waiter.takeOrder(customer.id);
     var expectedOrder = Order(menu.recipes.first, customer);
     expect(order, expectedOrder);
+  });
+
+  test('Waiter Role holds the Prepared Ingredients', () {
+    var customers = Customers([]);
+    var menu = Menu(recipes: []);
+    var preparedIngredients = PreparedIngredients();
+    var waiter = WaiterRole(menu, customers, preparedIngredients);
+    expect(waiter.preparedIngredients.ingredients, isEmpty);
   });
 }
