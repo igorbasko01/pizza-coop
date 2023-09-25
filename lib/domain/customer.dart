@@ -4,6 +4,7 @@ import 'package:pizza_coop/domain/recipe.dart';
 class Customer {
   final int id;
   String name;
+  bool isSatisfied = false;
 
   Customer(this.id, this.name);
 
