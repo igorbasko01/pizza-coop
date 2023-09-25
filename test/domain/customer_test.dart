@@ -30,4 +30,9 @@ void main() {
     expect(recipe, isNotNull);
     expect(recipe.name, 'Pizza');
   });
+
+  test('Customer is created as unsatisfied', () {
+    var customer = Customer(1, 'John');
+    expect(customer.isSatisfied, false);
+  });
 }
