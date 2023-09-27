@@ -62,4 +62,10 @@ void main() {
     var stockIngredient = StockIngredient('Pizza', 1);
     expect(() => customer.accept(stockIngredient), throwsA(isA<NoRecipeSelectedException>()));
   });
+
+  test('Customer should throw an exception if provided with empty menu', () {
+    var customer = Customer(1, 'John');
+    var menu = Menu(recipes: []);
+    expect(() => customer.selectRecipe(menu), throwsA(isA<NoRecipeAvailableException>()));
+  });
 }
