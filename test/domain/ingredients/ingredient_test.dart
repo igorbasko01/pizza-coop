@@ -28,6 +28,6 @@ void main() {
 
   test('Subtract throws exception if amount is greater than existing StockIngredient', () {
     var ingredient = StockIngredient('Flour', 1.5);
-    expect(() => ingredient.subtract(2.0), throwsA(isA<InsufficientIngredientException>()));
+    expect(ingredient.subtract(2.0).exception, isA<InsufficientIngredientException>());
   });
 }

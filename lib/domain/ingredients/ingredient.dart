@@ -1,3 +1,5 @@
+import 'package:pizza_coop/utils/result.dart';
+
 abstract class Ingredient {
   String get name;
 }
@@ -29,12 +31,13 @@ class StockIngredient extends Ingredient {
     _amount += amount;
   }
 
-  void subtract(double amount) {
+  Result<void> subtract(double amount) {
     if (amount > _amount) {
-      throw InsufficientIngredientException(
-          'Insufficient ingredient, needed: $amount, available: $_amount');
+      return Result.failure(InsufficientIngredientException(
+          'Insufficient ingredient, needed: $amount, available: $_amount'));
     }
     _amount -= amount;
+    return Result.success(null);
   }
 
   @override

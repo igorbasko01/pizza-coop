@@ -56,15 +56,15 @@ void main() {
   test('Stock use throws exception if there is insufficient ingredient', () {
     var stock = IngredientsStock();
     stock.add(StockIngredient('Flour', 1.5));
-    expect(() => stock.use(StockIngredient('Flour', 2.0)),
-        throwsA(isA<InsufficientIngredientException>()));
+    expect(stock.use(StockIngredient('Flour', 2.0)).exception,
+        isA<InsufficientIngredientException>());
   });
 
   test('Stock use throws exception if there is no such ingredient', () {
     var stock = IngredientsStock();
     stock.add(StockIngredient('Flour', 1.5));
-    expect(() => stock.use(StockIngredient('Tomato Sauce', 1.0)),
-        throwsA(isA<IngredientNotFoundException>()));
+    expect(stock.use(StockIngredient('Tomato Sauce', 1.0)).exception,
+        isA<IngredientNotFoundException>());
   });
 
   test('Stock use should remove ingredient if reaches zero amount', () {
