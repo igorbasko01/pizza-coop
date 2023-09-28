@@ -59,4 +59,24 @@ void main() {
     var waiter = WaiterRole(menu, customers, preparedIngredients);
     expect(waiter.preparedIngredients.ingredients, isEmpty);
   });
+
+  test(
+      'When passing an ingredient to the customer, the ingredient should be removed from the prepared ingredients',
+      () {
+    var customerId = 1;
+    var ingredientName = 'Margherita';
+    var customers = Customers([Customer(customerId, 'John Doe')]);
+    var menu = Menu(recipes: [
+      Recipe(ingredientName, [
+        StockIngredient('Flour', 1.5),
+        StockIngredient('Tomato Sauce', 0.5),
+        StockIngredient('Cheese', 2.0)
+      ])
+    ]);
+    var preparedIngredients = PreparedIngredients(ingredients: [StockIngredient(ingredientName, 1)]);
+    var waiter = WaiterRole(menu, customers, preparedIngredients);
+    customers.customers[0].selectRecipe(menu);
+    waiter.passIngredient(ingredientName, customerId);
+    expect(waiter.preparedIngredients.ingredients, isEmpty);
+  });
 }
