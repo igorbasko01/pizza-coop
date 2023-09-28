@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:pizza_coop/domain/ingredients/ingredient.dart';
 import 'package:pizza_coop/domain/ingredients/ingredients_catalog.dart';
 import 'package:pizza_coop/utils/result.dart';
@@ -13,25 +15,27 @@ class IngredientsStock {
     }
   }
 
-  void add(StockIngredient ingredient) {
+  Result<void> add(StockIngredient ingredient) {
     var existingIngredient = _findFirstIngredient(ingredient.name);
     if (existingIngredient.isSuccess) {
       existingIngredient.value!.add(ingredient.amount);
+      return Result.success(null);
     } else {
       if (existingIngredient.exception is IngredientNotFoundException) {
         _ingredients.add(ingredient);
+        return Result.success(null);
       } else {
-        throw existingIngredient.exception!;
+        return Result.failure(existingIngredient.exception!);
       }
     }
   }
 
-  void use(StockIngredient ingredient) {
+  Result<void> use(StockIngredient ingredient) {
     var existingIngredient = _findFirstIngredient(ingredient.name);
     if (existingIngredient.isSuccess) {
-      _subtract(existingIngredient.value!, ingredient);
+      return _subtract(existingIngredient.value!, ingredient);
     } else {
-      throw existingIngredient.exception!;
+      return Result.failure(existingIngredient.exception!);
     }
   }
 
@@ -45,14 +49,15 @@ class IngredientsStock {
     }
   }
 
-  void _subtract(StockIngredient left, StockIngredient right) {
+  Result<void> _subtract(StockIngredient left, StockIngredient right) {
     if (left.name != right.name) {
       throw ArgumentError("Cannot subtract different ingredients");
     }
-    left.subtract(right.amount);
+    var subtractResult = left.subtract(right.amount);
     if (left.amount == 0) {
       _ingredients.remove(left);
     }
+    return subtractResult;
   }
 
   Result<void> _isEnoughIngredients(List<StockIngredient> ingredients) {
