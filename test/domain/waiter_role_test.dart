@@ -79,4 +79,55 @@ void main() {
     waiter.passIngredient(ingredientName, customerId);
     expect(waiter.preparedIngredients.ingredients, isEmpty);
   });
+
+  test('When passed not selected by customer ingredient, throw an exception', () {
+    var customerId = 1;
+    var ingredientName = 'Margherita';
+    var customers = Customers([Customer(customerId, 'John Doe')]);
+    var menu = Menu(recipes: [
+      Recipe(ingredientName, [
+        StockIngredient('Flour', 1.5),
+        StockIngredient('Tomato Sauce', 0.5),
+        StockIngredient('Cheese', 2.0)
+      ]), Recipe('Pasta', [
+        StockIngredient('Flour', 1.0),
+        StockIngredient('Tomato Sauce', 0.5),
+      ])
+    ]);
+    var preparedIngredients = PreparedIngredients(ingredients: [
+      StockIngredient(ingredientName, 1),
+      StockIngredient('Pasta', 1)]);
+    customers.customers[0].selectRecipe(menu);
+    var waiter = WaiterRole(menu, customers, preparedIngredients);
+    expect(waiter.passIngredient('Pasta', customerId).exception,
+        isA<UnwantedIngredientException>());
+    expect(preparedIngredients.ingredients.length, 2);
+    expect(preparedIngredients.ingredients[0].name, ingredientName);
+    expect(preparedIngredients.ingredients[0].amount, 1);
+    expect(preparedIngredients.ingredients[1].name, 'Pasta');
+    expect(preparedIngredients.ingredients[1].amount, 1);
+  });
+
+  test('when not enough of prepared ingredient is passed to the customer throw an exception', () {
+    var customerId = 1;
+    var ingredientName = 'Margherita';
+    var customers = Customers([Customer(customerId, 'John Doe')]);
+    var menu = Menu(recipes: [
+      Recipe(ingredientName, [
+        StockIngredient('Flour', 1.5),
+        StockIngredient('Tomato Sauce', 0.5),
+        StockIngredient('Cheese', 2.0)
+      ])
+    ]);
+    var preparedIngredients = PreparedIngredients(ingredients: [
+      StockIngredient(ingredientName, 0.5),
+    ]);
+    customers.customers[0].selectRecipe(menu);
+    var waiter = WaiterRole(menu, customers, preparedIngredients);
+    expect(waiter.passIngredient(ingredientName, customerId).exception,
+        isA<InsufficientIngredientException>());
+    expect(preparedIngredients.ingredients.length, 1);
+    expect(preparedIngredients.ingredients[0].name, ingredientName);
+    expect(preparedIngredients.ingredients[0].amount, 0.5);
+  });
 }

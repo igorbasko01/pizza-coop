@@ -3,6 +3,7 @@ import 'package:pizza_coop/domain/ingredients/ingredient.dart';
 import 'package:pizza_coop/domain/ingredients/ingredients_stock.dart';
 import 'package:pizza_coop/domain/menu.dart';
 import 'package:pizza_coop/domain/order.dart';
+import 'package:pizza_coop/utils/result.dart';
 
 class WaiterRole {
   final Menu menu;
@@ -17,10 +18,19 @@ class WaiterRole {
     return Order(recipe, customer);
   }
 
-  void passIngredient(String ingredientName, int customerId) {
+  Result<void> passIngredient(String ingredientName, int customerId) {
     var customer = customers.getCustomer(customerId);
-    var ingredient = StockIngredient(ingredientName, 1);
-    customer.accept(ingredient);
-    preparedIngredients.use(ingredient);
+    var ingredientToUse = StockIngredient(ingredientName, 1);
+    var used = preparedIngredients.use(ingredientToUse);
+    if (used.isFailure) {
+      return Result.failure(used.exception!);
+    }
+    var accepted = customer.accept(ingredientToUse);
+    if (accepted.isFailure) {
+      preparedIngredients.add(ingredientToUse);  // Put back the used ingredient.
+      return Result.failure(accepted.exception!);
+    } else {
+      return Result.success(null);
+    }
   }
 }
