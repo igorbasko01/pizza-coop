@@ -60,7 +60,7 @@ void main() {
   test('Customer cannot accept a StockIngredient before a recipe is selected', () {
     var customer = Customer(1, 'John');
     var stockIngredient = StockIngredient('Pizza', 1);
-    expect(() => customer.accept(stockIngredient), throwsA(isA<NoRecipeSelectedException>()));
+    expect(customer.accept(stockIngredient).exception, isA<NoRecipeSelectedException>());
   });
 
   test('Customer should throw an exception if provided with empty menu', () {
