@@ -8,7 +8,13 @@ void main() {
     await widgetTester.pumpWidget(const MaterialApp(
       home: MainMenuPage(),
     ));
-    expect(find.byType(ElevatedButton), findsOneWidget);
-    expect(find.text('Stock Role'), findsOneWidget);
+    expect(find.widgetWithText(ElevatedButton, 'Stock Role'), findsOneWidget);
+  });
+
+  testWidgets('Main Menu page contains Waiter Role Button', (widgetTester) async {
+    await widgetTester.pumpWidget(const MaterialApp(
+      home: MainMenuPage(),
+    ));
+    expect(find.widgetWithText(ElevatedButton, 'Waiter Role'), findsOneWidget);
   });
 }
