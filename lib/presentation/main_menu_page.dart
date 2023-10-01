@@ -9,12 +9,26 @@ class MainMenuPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text('Main Menu')),
       body: Center(
-        child: ElevatedButton(
-          child: const Text('Stock Role'),
-          onPressed: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => StockRolePage()));
-          },
+        child: Column(
+          children: [
+            ElevatedButton(
+              child: const Text('Stock Role'),
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (_) {
+                  return StockRolePage();
+                }));
+              },
+            ),
+            ElevatedButton(
+              child: const Text('Waiter Role'),
+              onPressed: () {
+                const SnackBar(
+                  content: Text('Waiter Role is under construction'),
+                  duration: Duration(seconds: 1),
+                );
+              },
+            ),
+          ],
         ),
       ),
     );
