@@ -12,7 +12,7 @@ class WaiterRolePageView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Waiter Role'),
+        title: const Text('Waiter Role Page'),
       ),
       body: BlocBuilder<WaiterRoleBloc, WaiterRoleState>(
         builder: (context, state) {
