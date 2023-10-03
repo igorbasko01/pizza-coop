@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:pizza_coop/domain/ingredients/ingredient.dart';
 import 'package:pizza_coop/domain/ingredients/ingredients_catalog.dart';
 import 'package:pizza_coop/utils/result.dart';

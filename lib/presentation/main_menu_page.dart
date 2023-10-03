@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pizza_coop/presentation/stock_role_page.dart';
+import 'package:pizza_coop/presentation/waiter_role_page.dart';
 
 class MainMenuPage extends StatelessWidget {
   const MainMenuPage({Key? key}) : super(key: key);
@@ -22,10 +23,9 @@ class MainMenuPage extends StatelessWidget {
             ElevatedButton(
               child: const Text('Waiter Role'),
               onPressed: () {
-                const SnackBar(
-                  content: Text('Waiter Role is under construction'),
-                  duration: Duration(seconds: 1),
-                );
+                Navigator.push(context, MaterialPageRoute(builder: (_) {
+                  return WaiterRolePage();
+                }));
               },
             ),
           ],
