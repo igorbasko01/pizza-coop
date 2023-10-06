@@ -14,6 +14,6 @@ class WaiterRoleBloc extends Bloc<WaiterRoleEvent, WaiterRoleState> {
 
   void _onLoadWaiterRoleEvent(LoadWaiterRoleEvent event, Emitter<WaiterRoleState> emit) {
     emit(LoadingWaiterRoleState());
-    emit(LoadedWaiterRoleState(waiterRole.customers));
+    emit(LoadedWaiterRoleState(waiterRole.customers, waiterRole.menu));
   }
 }

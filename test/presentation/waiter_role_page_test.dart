@@ -8,6 +8,8 @@ import 'package:pizza_coop/bloc/waiter_role/waiter_role_event.dart';
 import 'package:pizza_coop/bloc/waiter_role/waiter_role_state.dart';
 import 'package:pizza_coop/domain/customer.dart';
 import 'package:pizza_coop/domain/customers.dart';
+import 'package:pizza_coop/domain/menu.dart';
+import 'package:pizza_coop/domain/recipe.dart';
 import 'package:pizza_coop/presentation/waiter_role_page_view.dart';
 
 class MockWaiterRoleBloc extends MockBloc<WaiterRoleEvent, WaiterRoleState>
@@ -29,7 +31,7 @@ void main() {
         .thenReturn(LoadedWaiterRoleState(Customers([
       Customer(0, 'Customer 1'),
       Customer(1, 'Customer 2'),
-    ])));
+    ]), Menu(recipes: [])));
     await widgetTester.pumpWidget(MaterialApp(
         home: BlocProvider<WaiterRoleBloc>.value(
       value: mockWaiterRoleBloc!,
@@ -38,5 +40,24 @@ void main() {
     expect(find.byType(ListView), findsOneWidget);
     expect(find.widgetWithText(ListTile, 'Customer 1'), findsOneWidget);
     expect(find.widgetWithText(ListTile, 'Customer 2'), findsOneWidget);
+  });
+
+  testWidgets(
+      'When clicking on a customer in a list, it shows a snack bar with the selected recipe',
+      (widgetTester) async {
+    when(() => mockWaiterRoleBloc?.state).thenReturn(LoadedWaiterRoleState(
+        Customers([
+          Customer(0, 'Customer 1'),
+          Customer(1, 'Customer 2'),
+        ]),
+        Menu(recipes: [Recipe('Margherita', []), Recipe('Napoletana', [])])));
+    await widgetTester.pumpWidget(MaterialApp(
+        home: BlocProvider<WaiterRoleBloc>.value(
+      value: mockWaiterRoleBloc!,
+      child: const WaiterRolePageView(),
+    )));
+    await widgetTester.tap(find.widgetWithText(ListTile, 'Customer 1'));
+    await widgetTester.pumpAndSettle();
+    expect(find.widgetWithText(SnackBar, 'Customer 1 wants: Margherita'), findsOneWidget);
   });
 }
