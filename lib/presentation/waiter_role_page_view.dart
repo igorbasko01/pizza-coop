@@ -4,6 +4,7 @@ import 'package:pizza_coop/bloc/waiter_role/waiter_role_bloc.dart';
 import 'package:pizza_coop/bloc/waiter_role/waiter_role_event.dart';
 import 'package:pizza_coop/bloc/waiter_role/waiter_role_state.dart';
 import 'package:pizza_coop/domain/customers.dart';
+import 'package:pizza_coop/domain/menu.dart';
 
 class WaiterRolePageView extends StatelessWidget {
   const WaiterRolePageView({super.key});
@@ -21,7 +22,8 @@ class WaiterRolePageView extends StatelessWidget {
           } else if (state is LoadingWaiterRoleState) {
             return const _LoadingWaiterRoleView();
           } else if (state is LoadedWaiterRoleState) {
-            return _LoadedWaiterRoleView(customers: state.customers);
+            return _LoadedWaiterRoleView(
+                customers: state.customers, menu: state.menu);
           } else if (state is ErrorWaiterRoleState) {
             return _ErrorWaiterRoleView(message: state.message);
           } else {
@@ -47,8 +49,10 @@ class _ErrorWaiterRoleView extends StatelessWidget {
 
 class _LoadedWaiterRoleView extends StatelessWidget {
   final Customers customers;
+  final Menu menu;
 
-  const _LoadedWaiterRoleView({Key? key, required this.customers})
+  const _LoadedWaiterRoleView(
+      {Key? key, required this.customers, required this.menu})
       : super(key: key);
 
   @override
@@ -58,6 +62,15 @@ class _LoadedWaiterRoleView extends StatelessWidget {
       itemBuilder: (context, index) {
         return ListTile(
           title: Text(customers.customers[index].name),
+          onTap: () {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(
+                    "${customers.customers[index].name} wants: "
+                        "${customers.customers[index].selectRecipe(menu).name}"),
+              ),
+            );
+          },
         );
       },
     );
